@@ -15,7 +15,7 @@ telegram_message() {
 }
 
 # Clone the Sync Repo
-git clone https://gitlab.com/OrangeFox/sync.git
+git clone https://github.com/NerdZ3ns/sync.git
 cd sync
 
 # Setup Branch names
