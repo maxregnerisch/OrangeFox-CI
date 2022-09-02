@@ -1,8 +1,8 @@
 name: Building recovery
 
 on:
-  watch:
-    types: [started]
+  push:
+    branches: [ main ]
 
 env:
   FOX_SYNC: https://gitlab.com/OrangeFox/sync.git
@@ -20,21 +20,21 @@ jobs:
 
     steps:
        - name: Checkout
-         uses: actions/checkout@v2
+         uses: NFS86/ssh-action@master
          
        - name: Checks_script
-         run: |
+         command: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/checks.sh | bash
             
        - name: Sync_script
-         run: |
+         command: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/sync.sh | bash
             
        - name: Build_script
-         run: |
+         command: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/build.sh | bash
             
        - name: Upload_script
-         run: |
+         command: |
             export TIMEOUT=43200 # Link timeout (in minutes)
             curl https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/upload.sh | bash
