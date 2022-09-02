@@ -26,7 +26,7 @@ jobs:
          run: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/checks.sh | bash
 
-Sync:
+  Sync:
     runs-on: ubuntu-20.04
     
     container: 
@@ -40,7 +40,7 @@ Sync:
          run: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/sync.sh | bash
 
-Build:
+  Build:
     runs-on: ubuntu-20.04
     
     container: 
@@ -54,7 +54,7 @@ Build:
          run: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/build.sh | bash
 
-Upload:
+  Upload:
     runs-on: ubuntu-20.04
     
     container: 
