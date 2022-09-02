@@ -12,29 +12,59 @@ env:
   TG_TOKEN: ${{ secrets.TG_TOKEN }}
   
 jobs:
-  build:
-    runs-on: ubuntu-18.04
+  Checks:
+    runs-on: ubuntu-20.04
     
     container: 
       image: ghcr.io/sushrut1101/docker:ubuntu
 
     steps:
        - name: Checkout
-         uses: NFS86/ssh-action@master
+         uses: actions/checkout@v2
          
        - name: Checks_script
-         command: |
+         run: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/checks.sh | bash
-            
+
+Sync:
+    runs-on: ubuntu-20.04
+    
+    container: 
+      image: ghcr.io/sushrut1101/docker:ubuntu
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@v2
+           
        - name: Sync_script
-         command: |
+         run: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/sync.sh | bash
-            
+
+Build:
+    runs-on: ubuntu-20.04
+    
+    container: 
+      image: ghcr.io/sushrut1101/docker:ubuntu
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@v2
+         
        - name: Build_script
-         command: |
+         run: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/build.sh | bash
-            
+
+Upload:
+    runs-on: ubuntu-20.04
+    
+    container: 
+      image: ghcr.io/sushrut1101/docker:ubuntu
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@v2
+         
        - name: Upload_script
-         command: |
+         run: |
             export TIMEOUT=43200 # Link timeout (in minutes)
             curl https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/upload.sh | bash
