@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Source Configs
-source $CONFIG
+source config.sh
 
 # A Function to Send Posts to Telegram
 telegram_message() {
 	curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
-	-d chat_id="${TG_CHAT_ID}" \
+	-d chat_id="-1001580385450" \
 	-d parse_mode="HTML" \
 	-d text="$1"
 }

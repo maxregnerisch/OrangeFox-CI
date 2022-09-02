@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source Vars
-source $CONFIG
+source config.sh
 
 # Change to the Home Directory
 cd ~
@@ -9,13 +9,13 @@ cd ~
 # A Function to Send Posts to Telegram
 telegram_message() {
 	curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
-	-d chat_id="${TG_CHAT_ID}" \
+	-d chat_id="-1001580385450" \
 	-d parse_mode="HTML" \
 	-d text="$1"
 }
 
 # Clone the Sync Repo
-git clone $FOX_SYNC
+git clone https://gitlab.com/OrangeFox/sync.git
 cd sync
 
 # Setup Branch names

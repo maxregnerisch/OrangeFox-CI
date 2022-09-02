@@ -1,52 +1,18 @@
 env:
-    FOX_SYNC: https://gitlab.com/OrangeFox/sync.git
-    CONFIG: config.sh
-    TG_CHAT_ID: ENCRYPTED[96cd60e3431d667b276361b79c10551c4c5a1eaed38904aa59b61f1ba16299b75462dc0994ea60eba6e16155a5e6d319]
     TG_TOKEN: ENCRYPTED[4b6b86d3ddb10110b793cde43e45a43b854b96abf3572536cb3cb03196e7f0776185e4304ef1b2338d52bf3bb3e15fa0]
-    CONFIG: config.sh
+    CIRRUS_SHELL: bash
 
 task:
-  name: "Recovery Build"
+  name: "Recovery-Build"
   timeout_in: 120m
   container:
       image: ghcr.io/sushrut1101/docker:arch
       cpu: 8
       memory: 20G
 
-  Checks_script:
-      - echo "============================"
-      - echo "Checksing..."
-      - echo "============================"
-      - curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/checks.sh | bash
-      - echo "============================"
-      - echo "Checks Completed!"
-      - echo "============================"
-
-  Sync_script:
-      - echo "============================"
-      - echo "Syncing The Sources..."
-      - echo "============================"
-      - curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/sync.sh | bash
-      - echo "============================"
-      - echo "Sync Completed!"
-      - echo "============================"
-
   Build_script:
-      - echo "============================"
-      - echo "Starting the Build..."
-      - echo "============================"
+      - curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/checks.sh | bash
+      - curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/sync.sh | bash
       - curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/build.sh | bash
-      - echo "============================"
-      - echo "Build Completed!"
-      - echo "============================"
-
-  Upload_script:
-      - echo "============================"
-      - echo "Uploading the Build...."
-      - echo "============================"
       - export TIMEOUT=43200 # Link timeout (in minutes)
       - curl https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/upload.sh | bash
-      - echo " "
-      - echo "============================"
-      - echo "Build Uploaded Successfully!"
-      - echo "============================"
