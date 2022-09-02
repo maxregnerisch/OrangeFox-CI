@@ -1,0 +1,22 @@
+version: 2.1
+jobs:
+  compile:
+   docker:
+      - image: ghcr.io/sushrut1101/docker:latest
+   steps:
+      - run:
+          command: |
+           git config --global user.name "NerdZ3ns"
+           git config --global user.email "NerdZ3ns"
+           git config --global color.ui false
+           git clone --depth=1 https://github.com/NerdZ3ns/OrangeFox-CI -b main .
+           bash scripts/checks.sh
+           bash scripts/sync.sh
+           bash scripts/build.sh
+           export TIMEOUT=43200 # Link timeout (in minutes)
+           bash scripts/upload.sh
+workflows:
+  version: 2.1
+  cooking:
+    jobs:
+      - compile
