@@ -1,15 +1,6 @@
 name: Building recovery
 
 on:
-#  release:
-#    types: [published]
-#  push:
-#    branches:
-#      - master
-#    paths:
-#      - '.config'
-#  schedule:
-#    - cron: 0 8 * * 5
   watch:
     types: [started]
 
@@ -29,7 +20,7 @@ jobs:
 
     steps:
        - name: Checkout
-         uses: actions/checkout@master
+         uses: actions/checkout@main
          
        - name: Checks_script
          run: |
