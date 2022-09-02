@@ -13,7 +13,7 @@ env:
   
 jobs:
   Checks:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     container: 
       image: ghcr.io/sushrut1101/docker:latest
@@ -22,19 +22,10 @@ jobs:
        - name: Checkout
          uses: actions/checkout@v2
          
-       - name: Checks_script
+       - name: Build
          run: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/checks.sh | bash
-
-       - name: Sync_script
-         run: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/sync.sh | bash
-
-       - name: Build_script
-         run: |
             curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/build.sh | bash
-
-       - name: Upload_script
-         run: |
             export TIMEOUT=43200 # Link timeout (in minutes)
             curl https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/upload.sh | bash
