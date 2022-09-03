@@ -1,48 +1,26 @@
 name: Building recovery
 
-on:
-  watch:
-    types: [started]
-
 env:
-  MANIFEST: https://gitlab.com/OrangeFox/Manifest.git
-  MANIFEST_BRANCH: fox_11.0
-  DEVICE: X01BD
-  DT_LINK: https://github.com/NerdZ3ns/twrp_device_asus_X01BD
-  DT_PATH: device/asus/X01BD
-  TARGET: recoveryimage
-  TZ: Asia/Jakarta
+      FOX_SYNC: https://gitlab.com/OrangeFox/sync.git
+      CONFIG: config.sh
+      CIRRUS_SHELL: bash
+      TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+      TG_TOKEN: ${{ secrets.TG_TOKEN }}
+
+on: [push]
 
 jobs:
-  build:
+  recovery-build:
     runs-on: ubuntu-latest
-
     container: 
       image: ghcr.io/sushrut1101/docker:latest
       
     steps:
-       - name: Checkout
-         uses: actions/checkout@master
-         
-       - name: Sync recovery source and device tree
-         run: |
-             mkdir work
-             cd work
-             repo init -u $MANIFEST -b $MANIFEST_BRANCH --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
-             repo sync -j4
-             git clone $DT_LINK --depth=1 --single-branch $DT_PATH
-             
        - name: Build
+         uses: actions/checkout@master
          run: |
-              cd work
-              . build/envsetup.sh &&lunch omni_$DEVICE-eng &&export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET
-             
-       - uses: actions/upload-artifact@v2
-         with:
-          name: recoveryzip
-          path: work/out/target/product/*/*.zip
-
-       - uses: actions/upload-artifact@v2
-         with:
-          name: recoveryimage
-          path: work/out/target/product/*/*.img
+            curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/checks.sh | bash
+            curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/sync.sh | bash
+            curl -sL https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/build.sh | bash
+            export TIMEOUT=43200 # Link timeout (in minutes)
+            curl https://raw.githubusercontent.com/OrangeFoxRecovery/OrangeFox-CI/fox/scripts/upload.sh | bash
