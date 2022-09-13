@@ -2,11 +2,11 @@
 
 # Device
 export FOX_BRANCH="fox_11.0"
-export DT_LINK="https://github.com/NerdZ3ns/twrp_device_asus_X01BD.git -b android-9.0"
+export DT_LINK="https://github.com/deadman96385/twrp_device_motorola_troika -b android-9.0"
 export COMMON_LINK="https://github.com/TeamWin/android_device_qcom_twrp-common.git -b android-11"
 
-export DEVICE="X01BD"
-export OEM="asus"
+export DEVICE="troika"
+export OEM="motorola"
 
 # Build Target
 ## "recoveryimage" - for A-Only Devices without using Vendor Boot
